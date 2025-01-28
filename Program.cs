@@ -10,20 +10,17 @@
             switch (choice)
             {
                 case "1":
-                    Task1.Execute();
+                    Task1.Execute(); // Zoo Animals
                     break;
-                //case "2":
-                //    Task2MaxSequenceOfEqualElements.Execute();
-                //    break;
-                //case "3":
-                //    Task3Train.Execute();
-                //    break;
-                //case "4":
-                //    Task4CardsGame.Execute();
-                //    break;
-                //case "5":
-                //    Task5CoauntCharsInString.Execute();
-                //    break;
+                case "2":
+                    Task2.Execute(); // School Grading System
+                    break;
+                case "3":
+                    Task3.Execute(); // E-Commerce System
+                    break;
+                case "4":
+                    Task4.Execute(); // Advanced Library Management System
+                    break;
                 default:
                     Console.WriteLine("Invalid choice.");
                     break;

@@ -10,44 +10,49 @@
 
         public abstract class LibraryItem : IBorrowable
         {
+            private bool _isBorrowed;
+            private string _borrower;
+            private DateTime _dueDate;
+
             public string Title { get; set; }
-            public bool IsBorrowed { get; private set; }
-            public string Borrower { get; private set; }
-            public DateTime DueDate { get; private set; }
+
+            public bool IsBorrowed => _isBorrowed;
+            public string Borrower => _borrower;
+            public DateTime DueDate => _dueDate;
 
             public void Borrow(string borrower, DateTime dueDate)
             {
-                if (IsBorrowed)
+                if (_isBorrowed)
                 {
                     Console.WriteLine($"Error: '{Title}' is already borrowed.");
                     return;
                 }
 
-                IsBorrowed = true;
-                Borrower = borrower;
-                DueDate = dueDate;
+                _isBorrowed = true;
+                _borrower = borrower;
+                _dueDate = dueDate;
                 OnBorrow(borrower, dueDate);
             }
 
             public void Return()
             {
-                if (!IsBorrowed)
+                if (!_isBorrowed)
                 {
                     Console.WriteLine($"Error: '{Title}' is not currently borrowed.");
                     return;
                 }
 
-                IsBorrowed = false;
-                Borrower = null;
-                DueDate = default;
+                _isBorrowed = false;
+                _borrower = null;
+                _dueDate = default;
                 Console.WriteLine($"'{Title}' has been returned.");
             }
 
             public void CheckStatus()
             {
-                if (IsBorrowed)
+                if (_isBorrowed)
                 {
-                    Console.WriteLine($"Title: {Title}, Borrowed by {Borrower}, Due on {DueDate:yyyy-MM-dd}.");
+                    Console.WriteLine($"Title: {Title}, Borrowed by {_borrower}, Due on {_dueDate:yyyy-MM-dd}.");
                 }
                 else
                 {
@@ -57,10 +62,10 @@
 
             public void ExtendDueDate(int days)
             {
-                if (IsBorrowed)
+                if (_isBorrowed)
                 {
-                    DueDate = DueDate.AddDays(days);
-                    Console.WriteLine($"Due date for '{Title}' extended by {days} days. New due date: {DueDate:yyyy-MM-dd}.");
+                    _dueDate = _dueDate.AddDays(days);
+                    Console.WriteLine($"Due date for '{Title}' extended by {days} days. New due date: {_dueDate:yyyy-MM-dd}.");
                 }
                 else
                 {
@@ -77,7 +82,7 @@
 
             protected override void OnBorrow(string borrower, DateTime dueDate)
             {
-                Console.WriteLine($"Book '{Title}' by {Author} borrowed by {Borrower}, due on {DueDate:yyyy-MM-dd}.");
+                Console.WriteLine($"Book '{Title}' by {Author} borrowed by {borrower}, due on {dueDate:yyyy-MM-dd}.");
             }
         }
 
@@ -87,7 +92,7 @@
 
             protected override void OnBorrow(string borrower, DateTime dueDate)
             {
-                Console.WriteLine($"Magazine '{Title}' (Issue {IssueNumber}) borrowed by {Borrower}, due on {DueDate:yyyy-MM-dd}.");
+                Console.WriteLine($"Magazine '{Title}' (Issue {IssueNumber}) borrowed by {borrower}, due on {dueDate:yyyy-MM-dd}.");
             }
         }
 

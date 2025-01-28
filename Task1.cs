@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using ConsoleApp9;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ConsoleApp9
 {
@@ -7,9 +7,20 @@ namespace ConsoleApp9
     {
         abstract class Animal
         {
-            public string Name { get; set; }
+            private string _name;
 
-            public Animal(string name)
+            public string Name
+            {
+                get { return _name; }
+                protected set
+                {
+                    if (string.IsNullOrWhiteSpace(value))
+                        throw new ArgumentException("Name cannot be empty or null.");
+                    _name = value;
+                }
+            }
+
+            protected Animal(string name)
             {
                 Name = name;
             }
@@ -45,12 +56,12 @@ namespace ConsoleApp9
         public static void Execute()
         {
             List<Animal> animals = new List<Animal>
-        {
-            new Dog("Rocky"),
-            new Cat("Snowball"),
-            new Dog("Hector"),
-            new Cat("Bella")
-        };
+            {
+                new Dog("Rocky"),
+                new Cat("Snowball"),
+                new Dog("Hector"),
+                new Cat("Bella")
+            };
 
             foreach (Animal animal in animals)
             {
